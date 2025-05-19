@@ -201,42 +201,48 @@ const CodeViewer: React.FC = () => {
         </div>
       </div>
 
-      <Tabs 
-        defaultValue="code" 
-        value={activeTab} 
-        onValueChange={setActiveTab} 
-        className="flex-1"
-      >
-        <div className="px-3 pt-2 border-b">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="code">Code</TabsTrigger>
-            <TabsTrigger value="preview">Preview</TabsTrigger>
-          </TabsList>
-        </div>
+      <div className="flex-1 flex flex-col overflow-hidden">
+        <Tabs 
+          defaultValue="code" 
+          value={activeTab} 
+          onValueChange={setActiveTab} 
+          className="flex-1 flex flex-col overflow-hidden"
+        >
+          <div className="px-3 pt-2 border-b">
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="code">Code</TabsTrigger>
+              <TabsTrigger value="preview">Preview</TabsTrigger>
+            </TabsList>
+          </div>
 
-        <TabsContent value="code" className="flex-1 p-0 h-full">
-          <ScrollArea className="h-full">
-            <pre className="p-4 text-sm font-mono h-full bg-black text-white">
-              <code>{selectedFile.content}</code>
-            </pre>
-          </ScrollArea>
-        </TabsContent>
+          <TabsContent value="code" className="flex-1 overflow-hidden mt-0">
+            <ScrollArea className="h-full w-full">
+              <div className="p-4">
+                <pre className="text-sm font-mono bg-black text-white rounded p-4 min-h-full">
+                  <code className="whitespace-pre-wrap break-words">
+                    {selectedFile.content}
+                  </code>
+                </pre>
+              </div>
+            </ScrollArea>
+          </TabsContent>
 
-        <TabsContent value="preview" className="flex-1 p-0 h-full">
-          {projectFiles.length > 0 ? (
-            <div className="h-full" key={refreshKey}>
-              <Sandpack 
-                files={projectFiles} 
-                activeFile={selectedFile.path} 
-              />
-            </div>
-          ) : (
-            <div className="flex h-full items-center justify-center">
-              <p className="text-muted-foreground">No files to preview yet.</p>
-            </div>
-          )}
-        </TabsContent>
-      </Tabs>
+          <TabsContent value="preview" className="flex-1 overflow-hidden mt-0">
+            {projectFiles.length > 0 ? (
+              <div className="h-full" key={refreshKey}>
+                <Sandpack 
+                  files={projectFiles} 
+                  activeFile={selectedFile.path} 
+                />
+              </div>
+            ) : (
+              <div className="flex h-full items-center justify-center">
+                <p className="text-muted-foreground">No files to preview yet.</p>
+              </div>
+            )}
+          </TabsContent>
+        </Tabs>
+      </div>
     </div>
   );
 };
